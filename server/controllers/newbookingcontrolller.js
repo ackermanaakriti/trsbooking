@@ -324,3 +324,50 @@ exports.roomAvailability = async (req, res) => {
   }
 };
 
+
+
+exports.addComplementary = async (req, res) => {
+  try {
+    const { service_name } = req.body;
+    if (!service_name) {
+      return res.status(400).json({ message: 'Service name is required' });
+    }
+
+    const query = 'INSERT INTO complementaries (service_name) VALUES (?)';
+
+    const [result] = await db.execute(query, [service_name]);
+
+    const newComplementary = {
+      id: result.insertId,
+      service_name,
+    };
+
+    res.status(201).json(newComplementary);
+  } catch (error) {
+    console.error('Error adding complementary:', error);
+    res.status(500).json({ message: 'Error adding complementary' });
+  }
+};
+
+
+
+exports.deleteComplementary = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({ message: 'ID is required' });
+    }
+
+    const query = 'DELETE FROM complementaries WHERE id = ?';
+    const [result] = await db.execute(query, [id]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Complementary not found' });
+    }
+
+    res.status(200).json({ message: 'Complementary deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting complementary:', error);
+    res.status(500).json({ message: 'Error deleting complementary' });
+  }
+};

@@ -28,12 +28,12 @@ exports.getRoomById = async (req, res) => {
 
 // Add a new room
 exports.addRoom = async (req, res) => {
-  const { room_number, room_name } = req.body;
+  const { room_number, room_name, room_status } = req.body;
   try {
     console.log('Adding new room:', room_name);
     const [result] = await db.execute(
-      'INSERT INTO rooms (room_number, room_name) VALUES (?, ?)',
-      [room_number, room_name]
+      'INSERT INTO rooms (room_number, room_name,room_status) VALUES (?, ?)',
+      [room_number, room_name,room_status]
     );
     res.status(201).json({ id: result.insertId });
   } catch (err) {
@@ -44,12 +44,12 @@ exports.addRoom = async (req, res) => {
 // Update a room
 exports.updateRoom = async (req, res) => {
   const { id } = req.params;
-  const { room_number, room_name } = req.body;
+  const { room_number, room_name,room_status } = req.body;
   try {
     console.log(`Updating room with ID: ${id}`);
     const [result] = await db.execute(
-      'UPDATE rooms SET room_number = ?, room_name = ? WHERE id = ?',
-      [room_number, room_name, id]
+      'UPDATE rooms SET room_number = ?, room_name = ? ,room_status =? WHERE id = ?',
+      [room_number, room_name, room_status, id]
     );
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: 'Room not found' });

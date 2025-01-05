@@ -3,7 +3,7 @@ const { login, register } = require('../controllers/authcontroller');  // Ensure
 const { authMiddleware } = require('../middlewares/authmiddleware');
 const roleMiddleware = require('../middlewares/rolemiddleware');
 const { getRooms, addRoom, getRoomById, deleteRoom, updateRoom } = require('../controllers/roomcontroller');
-const { addBookings, getAllbookings, deleteBooking, updateBooking, getComplementry, roomAvailability, getBooking, addComplementary, deleteComplementary } = require('../controllers/newbookingcontrolller');
+const { addBookings, getAllbookings, deleteBooking, updateBooking, getComplementry, roomAvailability, getBooking, addComplementary, deleteComplementary, deleteSelectedRoom } = require('../controllers/newbookingcontrolller');
 const { getInquiry, getInquiryById, deleteInquiry, updateInquiry, addInquiry } = require('../controllers/inquirycontroller');
 const { loginUser, registerUser } = require('../controllers/usercontroller');
 // const { addBooking, getBooking, deleteBooking, editBooking, getBookingByid } = require('../controllers/bookingcontroller');
@@ -33,6 +33,7 @@ router.post('/add/complementry',addComplementary);
 router.delete('/delete/complementry/:id',deleteComplementary)
 router.post('/roomavailability',roomAvailability);
 router.get('/getbooking/:id',getBooking)
+router.delete('/deleteSelected_room/:id',deleteSelectedRoom)
 
 // router.get('/getbooking/:id',authMiddleware,roleMiddleware(['admin','agent']),ge)
 

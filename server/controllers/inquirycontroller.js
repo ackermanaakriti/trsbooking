@@ -64,7 +64,7 @@ exports.deleteInquiry = async (req, res) => {
   const { id } = req.params;
   try {
     console.log(`Deleting room with ID: ${id}`);
-    const [result] = await db.execute('DELETE FROM rooms WHERE id = ?', [id]);
+    const [result] = await db.execute('DELETE FROM inquiry WHERE id = ?', [id]);
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: 'Inquiry not found' });
     }
